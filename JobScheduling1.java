@@ -21,20 +21,17 @@ class JobScheduling1{
     }
 
     private int scheduleApt(Job[] jobs) {
-        // Sort jobs according to finish time
         Arrays.sort(jobs, Comparator.comparingInt(a -> a.finish));
-        // dp[i] stores the profit for jobs till jobs[i]
-        // (including jobs[i])
         int n = jobs.length;
         int[] dp = new int[n];
         dp[0] = jobs[0].profit;
         for (int i=1; i<n; i++) {
-            // Profit including the current job
+           
             int profit = jobs[i].profit;
             int l = search(jobs, i);
             if (l != -1)
                 profit += dp[l];
-            // Store maximum of including and excluding
+            
             dp[i] = Math.max(profit, dp[i-1]);
         }
 
